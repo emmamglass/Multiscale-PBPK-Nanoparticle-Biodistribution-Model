@@ -18,18 +18,12 @@ y0 = [0.00000000039 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]; %initial conditions
 global  A_i K_EC l_NC_b V_i_BL V_i_T V_vein;
 global  K_i_on K_i_off K_i_deg K_i_up K_NS Q_i Q;
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Variable Values from literature   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Physiological Parameter Values from literature   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-A_i     = [.0019956689 .0009621096822 .0033612343 .0045212562 .0004750356]*1000; % dm^2, 
+A_i     = [.0019956689 .0009621096822 .0033612343 .0045212562 .0004750356]*1000; % dm^2, crossectional area of cell free layer above EC
 
 l_NC_b  = (10^(-6)); %dm, length of the nanocarrier bond
-          
-K_EC    = [1.23*10^42 10.6565662 41793.3924 2.28*10^12 7.74*10^21]; %from ramakrishnan 2016
-
-K_i_on  = [1534.3 1534.3 1534.3 1534.3 1534.3]; %Binding rate of NP to endothelial cell surface receptors
-
-K_i_off = [(K_i_on(1)/(log(K_EC(1)))) (K_i_on(2)/(log(K_EC(2)))) (K_i_on(3)/(log(K_EC(3)))) (K_i_on(4)/(log(K_EC(4)))) (K_i_on(5)/(log(K_EC(5))))]; % k_on/k_ec, the rate of NP unbinding from surface receptors
-         
+                  
 Q_i     = [1100.83758415 138.673326 763.9168803 284.6716878 224.48828292]/(60*10^6); %L/sec, blood flow rate in each organ
       
 V_i_BL  = [43.65525742 20.04395171  1018.55584 127.7673516 2.226207538]/10^6; %L, volume of blood in each organ
@@ -39,13 +33,21 @@ V_i_T   = [33.26114851 16.03516137 56.02057122 75.3542703 7.91726]/10^6; %L, tis
 V_vein  = 466.9/10^6; % L, volume of blood in the veins (and also the arteries
           
 Q       =  Q_i(1)+Q_i(2)+Q_i(3)+Q_i(4)+Q_i(5); %L/sec total flow rate
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Rate Parameters  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Variable Values From Sensitivity Analysis  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
+K_EC    = [1.23*10^42 10.6565662 41793.3924 2.28*10^12 7.74*10^21]; %from ramakrishnan 2016
+
+K_i_on  = [1534.3 1534.3 1534.3 1534.3 1534.3]; %Binding rate of NP to endothelial cell surface receptors
+
+K_i_off = [(K_i_on(1)/(log(K_EC(1)))) (K_i_on(2)/(log(K_EC(2)))) (K_i_on(3)/(log(K_EC(3)))) (K_i_on(4)/(log(K_EC(4)))) (K_i_on(5)/(log(K_EC(5))))]; % k_on/k_ec, the rate of NP unbinding from surface receptors
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Rate Parameters From Sensitivity Analysis  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
 
 K_i_deg = [1/500000     1/500000   1/500     1/20000   1/200000 ]; %rate of NP degredation in each organ compartment
           
         
-K_i_up  = [1000            1/170      1/1000      100      1/18 ]; %rate of NP update via receptor mediated endocytosis
+K_i_up  = [1000            1/170      1/1000      100      1/18 ]; %rate of NP uptake via receptor mediated endocytosis
           
     
 K_NS    = [1000            1/100       1/1000      100       1/20    ]; %rate of nonspecific uptake via transyctosis
@@ -161,8 +163,11 @@ plot(t/3600,((y(:,1)*V_vein)+...
        (M_total_T_vec)+...
        (M_total_star_vec)+...
        (M_total_bl_vec)))
-   
+
+ylabel('Moles NP')
+xlabel('Time Hours')  
 ylim([1*10e-14 3*10e-14])
+
 %%%%%%%%%%%%%%%%%%%%%%%%%% Plot biodistribution of NP in each organ compartment %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -222,9 +227,6 @@ legend('C_{Spleen}^{T}')
 legend('C_{Spleen}^{T}')
 xlabel('Time (Hours)')
 ylabel('C_{NP}/C_{NP Tot}')
-
-ylabel('Moles NP')
-xlabel('Time Hours')
    
 
 %%%%%%%%%%%%%%%%%%% Define the system of 17 linear ODEs %%%%%%%%%%%%%%%%%   
@@ -235,10 +237,10 @@ global  K_i_on K_i_off K_i_deg K_i_up K_NS Q_i Q;
 
 dydt= zeros(17,1);
 
-%artery
+%vein
 dydt(1) = ((Q_i(1)*y(3)+Q_i(2)*y(4)+Q_i(3)*y(5)+Q_i(4)*y(6)+Q_i(5)*y(7))-Q*y(1))/(V_vein);
 
-%vein
+%artery
 dydt(2) = ((Q*y(1)-(Q_i(1)*y(2)+Q_i(2)*y(2)+Q_i(3)*y(2)+Q_i(4)*y(2)+Q_i(5)*y(2)))/(V_vein));
 
 %%%%%%%%%%%%%%%%%%%%% Vascular compartment %%%%%%%%%%%%%%%%%%%%%%%%%
