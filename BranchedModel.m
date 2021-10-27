@@ -145,12 +145,11 @@ Q_vein = sum(Q); %L/sec, flow in vein and artery
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%          Rate parameters from literature          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-K_on  = [1534.3 1534.3 1534.3 1534.3 1534.3 1534.3 1534.3]; % Binding rate of NP to endothelial cell surface receptors
+K_on  = [120.9 120.9 120.9 120.9 120.9 120.9 120.9]; % Binding rate of NP to endothelial cell surface receptors
 
-K_EC    = [1.23*10^42 10.6565662 41793.3924 2.28*10^12 7.74*10^21 3.33E15 3.33E15]; %From Ramakrishnan 2016
+K_EC    = [exp(96.96) exp(2.37) exp(10.64) exp(28.46) exp(50.4) exp(35.74) exp(35.74)]; %From Ramakrishnan 2016
 
-% K_i_off = K_i_on / ln(K_EC)
-K_off = [104711.5975 104711.5975 104711.5975 104711.5975 104711.5975 104711.5975 104711.5975]; %kon/kec, the rate of NP unbinding from surface receptors
+K_off = [1.25 51.1 11.36 4.25 2.4 3.38 3.38]; %kon/ln(kec), the rate of NP unbinding from surface receptors
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%    Rate Parameters from sensitivity analysis      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -160,7 +159,7 @@ K_deg = [1/500000 1/500000 1/2000 1/200000 1/20000 1/30000 1/30000 1/6000]; %rat
          
 K_up  = [1 1/10 1/300 1/200 1/10 1/100 1/100]; %rate of NP uptake via receptor mediated endocytosis
     
-K_NS  = [1 1/50 1/500 1/50 1/70 1/50 1/50];  % rate of nonspecific uptake via transyctosis
+K_NS  = [1/500 1/500 1/500 1/50 1/70 1/50 1/500]];  % rate of nonspecific uptake via transyctosis
 
 %%%%%%%%%%%%%%%%%%%%%%%% Determining the number of branching elements per organ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
