@@ -108,11 +108,11 @@ t_step = 0.001; %time, seconds
 
 conc=0.00000000039; %define initial NP concentration
 
-%%%%%%%%%%%%%%%%%%  Sum total number of NP in the system to ensure mass conservation     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%  Sum total number of NP degraded in the system to ensure mass conservation     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 figure(1)
 hold on
 
-%calculating the total NP in the vascular compartment of each organ
+%calculating the total NP degraded in the vascular compartment of each organ
 M_total_bl = 0;
 M_total_bl_vec = zeros(length(t),1);
 for i=1:length(t)
@@ -126,7 +126,7 @@ for i=1:length(t)
 end
 
 
-%calculating the total NP in the endothelial cell compartment of each organ
+%calculating the total NP degraded in the endothelial cell compartment of each organ
 M_total_star = 0;
 M_total_star_vec = zeros(length(t),1);
 for i=1:length(t)
@@ -140,7 +140,7 @@ for i=1:length(t)
 end
 
 
-%%calculating the total NP in the tissue compartment of each organ
+%%calculating the total NP degraded in the tissue compartment of each organ
 M_total_T = 0;
 M_total_T_vec = zeros(length(t),1);
 for i=1:length(t)
