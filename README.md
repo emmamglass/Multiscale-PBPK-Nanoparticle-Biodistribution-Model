@@ -20,4 +20,4 @@ branched_model_julia.ipynb:
 Julia code for branched model
 
 NeuralNet_QSSA_julia.ipynb:
-Neural net solver for branched model
+Neural Net solver incorporating quasi-steady-state approximation
