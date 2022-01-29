@@ -9,3 +9,15 @@ Matlab code for the ODE model with 23 linear ODEs tht describes the biodistribut
 
 BranchedModel.m:
 Matlab code for the ODE model with 457 linear ODEs that describe the biodistribution of NP in the same organ compartments as model b, but updated with an arterial branching architecture that is most physiologically relevant. 
+
+modelA_julia.ipynb:
+Julia code for model A
+
+modelB_julia.ipynb:
+Julia code for model B
+
+branched_model_julia.ipynb:
+Julia code for branched model
+
+NeuralNet_QSSA_julia.ipynb:
+Neural net solver for branched model
